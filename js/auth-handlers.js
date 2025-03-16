@@ -13,6 +13,14 @@ const logoutButton = document.getElementById('logoutButton');
 const loginError = document.getElementById('loginError');
 const registerError = document.getElementById('registerError');
 
+showRegisterLink.addEventListener('click', () => {
+    console.log('Register link clicked'); // Debugging
+    registerSection.classList.remove('hidden');
+    loginSection.classList.add('hidden');
+    loginError.textContent = '';
+});
+
+
 // Show/Hide Auth Forms
 showLoginLink.addEventListener('click', () => {
     registerSection.classList.add('hidden');
