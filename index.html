@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CG PET Mock Test | ReadECuble</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth-styles.css">
+</head>
+
+<body>
+    <!-- Auth Container -->
+    <div id="authContainer" class="container">
+        <div class="header">
+            <div class="logo">CG PET Mock Test</div>
+            <div class="subtitle">Prepared by ReadECuble</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginSection" class="auth-section">
+            <div class="card">
+                <h2>Login to Your Account</h2>
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                </div>
+                <div class="error-message" id="loginError"></div>
+                <button id="loginButton" class="primary-button">Login</button>
+                <div class="auth-toggle">
+                    <p>Don't have an account? <span id="showRegister" class="toggle-link">Create one</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="registerSection" class="auth-section hidden">
+            <div class="card">
+                <h2>Create New Account</h2>
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                </div>
+                <div class="error-message" id="registerError"></div>
+                <button id="registerButton" class="primary-button">Register</button>
+                <div class="auth-toggle">
+                    <p>Already have an account? <span id="showLogin" class="toggle-link">Login</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Page -->
+    <div id="startPage" class="container hidden">
+        <div class="header">
+            <div class="logo">CG PET Mock Test</div>
+            <div class="subtitle">Prepared by ReadECuble</div>
+        </div>
+
+        <div class="user-panel">
+            <span class="user-name">User</span>
+            <button id="logoutButton" class="logout-button">Logout</button>
+        </div>
+
+        <div class="card instruction-box">
+            <h2>General Instructions:</h2>
+            <ul>
+                <li><b>Test Duration:</b> 3 Hours</li>
+                <li><b>Total Questions:</b> 150</li>
+                <li><b>Total Marks:</b> 150</li>
+                <li><b>No Negative Marking</b></li>
+                <li><b>Subjects:</b> Physics, Chemistry, and Mathematics</li>
+                <li><b>Question Distribution: Syllabus → (Class 11 & 12)</b>
+                    <ul>
+                        <li>1 - 50 → Physics</li>
+                        <li>51 - 100 → Chemistry</li>
+                        <li>101 - 150 → Mathematics</li>
+                    </ul>
+                </li>
+                <li><b>Each question has 4 options (A, B, C, D). Select the correct answer.</b></li>
+                <li><b>Once the time is over, your test will be submitted automatically.</b></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Choose Mock Test</h2>
+            <div class="paper-selection">
+                <div class="paper-card" data-paper="paper1">
+                    <h3>Paper 1</h3>
+                    <p>Standard difficulty level</p>
+                    <button class="start-test-btn" data-paper="paper1">Start Test</button>
+                </div>
+                <div class="paper-card" data-paper="paper2">
+                    <h3>Paper 2</h3>
+                    <p>Advanced difficulty level</p>
+                    <button class="start-test-btn" data-paper="paper2">Start Test</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Your Previous Attempts</h2>
+            <div id="previousTests">
+                <!-- Will be populated dynamically -->
+                <div class="no-tests-message">No previous attempts found.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Page -->
+    <div id="testPage" class="container hidden">
+        <div class="header">
+            <div class="logo">CG PET Mock Test</div>
+            <div class="subtitle" id="testInfo">Paper 1 | <span id="candidateNameDisplay"></span></div>
+        </div>
+
+        <div class="timer-container">
+            <div id="timer">Time Left: 3:00:00</div>
+            <button id="submitBtn" class="btn-secondary">Submit Test</button>
+        </div>
+
+        <div class="test-container">
+            <div class="sidebar">
+                <h3>Questions</h3>
+                <div class="subject-filters">
+                    <button class="filter-btn active" data-subject="all">All</button>
+                    <button class="filter-btn" data-subject="physics">Physics</button>
+                    <button class="filter-btn" data-subject="chemistry">Chemistry</button>
+                    <button class="filter-btn" data-subject="mathematics">Mathematics</button>
+                </div>
+                <div id="questionNav"></div>
+            </div>
+
+            <div class="main-content">
+                <div id="questionsContainer"></div>
+
+                <div class="button-group">
+                    <button id="prevBtn">Previous</button>
+                    <div class="question-counter">Question <span id="currentQuestionNum">1</span> of <span
+                            id="totalQuestions">150</span></div>
+                    <button id="nextBtn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div id="resultsPage" class="container hidden">
+        <div class="header">
+            <div class="logo">CG PET Mock Test</div>
+            <div class="subtitle">Test Results</div>
+        </div>
+
+        <div class="card">
+            <div class="result-summary">
+                <h2>Your Score</h2>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <span id="scoreValue">0</span>
+                        <span class="score-total">/150</span>
+                    </div>
+                </div>
+                <div class="score-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Correct Answers:</span>
+                        <span id="correctAnswers" class="detail-value">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Incorrect Answers:</span>
+                        <span id="incorrectAnswers" class="detail-value">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Unattempted:</span>
+                        <span id="unattemptedAnswers" class="detail-value">0</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Time Taken:</span>
+                        <span id="timeTaken" class="detail-value">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Subject-wise Performance</h2>
+            <div class="subject-performance">
+                <div class="subject-bar physics">
+                    <div class="subject-name">Physics</div>
+                    <div class="progress-container">
+                        <div id="physicsBar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="physicsScore" class="subject-score">0/50</div>
+                </div>
+                <div class="subject-bar chemistry">
+                    <div class="subject-name">Chemistry</div>
+                    <div class="progress-container">
+                        <div id="chemistryBar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="chemistryScore" class="subject-score">0/50</div>
+                </div>
+                <div class="subject-bar mathematics">
+                    <div class="subject-name">Mathematics</div>
+                    <div class="progress-container">
+                        <div id="mathBar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="mathScore" class="subject-score">0/50</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-group centered">
+            <button id="reviewTestBtn" class="primary-button">Review Test</button>
+            <button id="backToHomeBtn" class="secondary-button">Back to Home</button>
+        </div>
+    </div>
+
+    <!-- Review Test Page -->
+    <div id="reviewPage" class="container hidden">
+        <div class="header">
+            <div class="logo">CG PET Mock Test</div>
+            <div class="subtitle">Test Review</div>
+        </div>
+
+        <div class="test-container">
+            <div class="sidebar">
+                <h3>Questions</h3>
+                <div class="review-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="correct">Correct</button>
+                    <button class="filter-btn" data-filter="incorrect">Incorrect</button>
+                    <button class="filter-btn" data-filter="unattempted">Unattempted</button>
+                </div>
+                <div id="reviewQuestionNav"></div>
+            </div>
+
+            <div class="main-content">
+                <div id="reviewQuestionsContainer"></div>
+
+                <div class="button-group">
+                    <button id="prevReviewBtn">Previous</button>
+                    <div class="question-counter">Question <span id="currentReviewNum">1</span> of <span
+                            id="totalReviewQuestions">150</span></div>
+                    <button id="nextReviewBtn">Next</button>
+                </div>
+
+                <div class="button-group centered mt-20">
+                    <button id="backToResultsBtn" class="secondary-button">Back to Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCFFjchFALF_oc1AwGZTLzn1XGAgHZcFp8",
+            authDomain: "cg-pet.firebaseapp.com",
+            databaseURL: "https://cg-pet-default-rtdb.firebaseio.com",
+            projectId: "cg-pet",
+            storageBucket: "cg-pet.firebasestorage.app",
+            messagingSenderId: "63971462525",
+            appId: "1:63971462525:web:a51000620b59c092c25014",
+            measurementId: "G-6D8X29HVMH"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        const storage = getStorage(app);
+
+        // Make Firebase services available globally
+        window.firebaseApp = app;
+        window.firebaseAuth = auth;
+        window.firebaseDb = database;
+        window.firebaseStorage = storage;
+    </script>
+
+    <!-- App Scripts -->
+    <script src="js/auth-handlers.js" type="module"></script>
+    <script src="js/app.js" type="module"></script>
+    <script src="js/test.js" type="module"></script>
+</body>
+
+</html>
