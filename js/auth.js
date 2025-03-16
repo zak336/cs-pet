@@ -11,15 +11,15 @@ import { getDatabase, ref, set } from "firebase/database";
 
 // Replace with your Firebase config
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCFFjchFALF_oc1AwGZTLzn1XGAgHZcFp8",
+    authDomain: "cg-pet.firebaseapp.com",
+    databaseURL: "https://cg-pet-default-rtdb.firebaseio.com",
+    projectId: "cg-pet",
+    storageBucket: "cg-pet.firebasestorage.app",
+    messagingSenderId: "63971462525",
+    appId: "1:63971462525:web:a51000620b59c092c25014",
+    measurementId: "G-6D8X29HVMH"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
